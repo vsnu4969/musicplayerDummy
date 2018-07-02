@@ -34,7 +34,7 @@ public class BitmapBuilder extends AsyncTask<SongGS, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        if (imageView.getTag() != null && song.getSongId()==(int)imageView.getTag())
+        if (bitmap != null && imageView.getTag() != null && song.getSongId() == (int) imageView.getTag())
             imageView.setImageBitmap(bitmap);
     }
 }

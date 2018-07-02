@@ -1,27 +1,16 @@
 
 /**
- * @file      GridAdapter.java
- * @brief     used to set up the view fo the first page of music player$
+ * @file GridAdapter.java
+ * @brief used to set up the view fo the first page of music player$
  * @copyright COPYRIGHT (C) 2018 MITSUBISHI ELECTRIC CORPORATION
- *            ALL RIGHTS RESERVED
- * @author    Vishnu Muraleedharan
+ * ALL RIGHTS RESERVED
+ * @author Vishnu Muraleedharan
  */
 
 package com.example.quest.aidldemomusic;
 
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -30,40 +19,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.aidllibrary.IMusicService;
 import com.example.aidllibrary.SongGS;
 import com.example.quest.aidldemomusic.SongImport.BitmapBuilder;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerInnerClass> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
     ArrayList<SongGS> arrayList;
-    LayoutInflater layoutInflater;
     Context context;
 
     public RecyclerAdapter(ArrayList<SongGS> arrayList, Context context) {
         this.arrayList = arrayList;
-        this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
-
-        // added comment
     }
 
     @NonNull
     @Override
-    public RecyclerInnerClass onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.song_list, parent, false);
-        RecyclerInnerClass recyclerInnerClassObj = new RecyclerInnerClass(view);
-        return recyclerInnerClassObj;
+        return new RecyclerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerInnerClass holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         SongGS currentObj = arrayList.get(position);
-        holder.setData(currentObj, position);
+        holder.setData(currentObj);
     }
 
     @Override
@@ -72,39 +54,33 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
 
 
-    public class RecyclerInnerClass extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         ImageView songCover;
         TextView songTitle;
         TextView songArtist;
         TextView songDuration;
-        int newposition;
-        SongGS object;
         CardView cardView;
-        public RecyclerInnerClass(final View itemView) {
+
+        public RecyclerViewHolder(final View itemView) {
             super(itemView);
 
-            cardView=itemView.findViewById(R.id.crd);
+            cardView = itemView.findViewById(R.id.crd);
             songCover = itemView.findViewById(R.id.song_cover);
             songTitle = itemView.findViewById(R.id.song_title);
-            songTitle.setSelected(true);
             songArtist = itemView.findViewById(R.id.song_artist);
-            songArtist.setSelected(true);
             songDuration = itemView.findViewById(R.id.song_duration);
-            itemView.setOnClickListener(this);
-
+            cardView.setOnClickListener(this);
         }
 
-        public void setData(final SongGS currentObj, int position) {
+        public void setData(SongGS song) {
             //this.songCover.setImageBitmap(currentObj.getCoverArt(itemView.getContext()));
-            this.songCover.setTag(currentObj.getSongId());
-            BitmapBuilder bitmapBuilder = new BitmapBuilder(songCover, itemView.getContext());
-             bitmapBuilder.execute(currentObj);
-            this.songTitle.setText(currentObj.getSongTitle());
-            this.songArtist.setText(currentObj.getSongArtist());
-            this.songDuration.setText(currentObj.getTime());
-            this.newposition = position;
-            this.object = currentObj;
-
+            this.songCover.setTag(song.getSongId());
+            BitmapBuilder bitmapBuilder = new BitmapBuilder(songCover, context);
+            bitmapBuilder.execute(song);
+            this.songTitle.setText(song.getSongTitle());
+            this.songArtist.setText(song.getSongArtist());
+            this.songDuration.setText(song.getTime());
         }
 
 

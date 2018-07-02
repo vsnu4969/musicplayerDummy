@@ -105,7 +105,7 @@ String songAlbum;
         byte[] art = metaRetriver.getEmbeddedPicture();
         return art != null
                 ? BitmapFactory.decodeByteArray(art, 0, art.length)
-                : BitmapFactory.decodeResource(context.getResources(),R.drawable.no_cover);
+                : null;
     }
 
     public SongGS(int songId, int songDuration, String songPath, String songTitle, String songArtist, String songAlbum) {
