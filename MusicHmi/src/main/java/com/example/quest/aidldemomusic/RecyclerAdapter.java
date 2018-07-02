@@ -26,8 +26,9 @@ import com.example.quest.aidldemomusic.SongImport.BitmapBuilder;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
-    ArrayList<SongGS> arrayList;
-    Context context;
+
+    private ArrayList<SongGS> arrayList;
+    private Context context;
 
     public RecyclerAdapter(ArrayList<SongGS> arrayList, Context context) {
         this.arrayList = arrayList;
