@@ -48,6 +48,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         this.arrayList = arrayList;
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
+
+        // added comment
     }
 
     @NonNull
