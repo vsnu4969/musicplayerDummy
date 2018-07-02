@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AidlDemoMusic</string>
+    <string name="appbar_scrolling_view_behavior">10dp</string>
+</resources>
