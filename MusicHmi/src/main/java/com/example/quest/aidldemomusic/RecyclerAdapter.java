@@ -29,10 +29,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     private ArrayList<SongGS> arrayList;
     private Context context;
+    private RecyclerListInteractor mListener;
 
-    public RecyclerAdapter(ArrayList<SongGS> arrayList, Context context) {
+    public RecyclerAdapter(ArrayList<SongGS> arrayList, MainActivity mainActivity) {
         this.arrayList = arrayList;
-        this.context = context;
+        this.context = mainActivity;
+        mListener = (RecyclerListInteractor) mainActivity;
     }
 
     @NonNull
@@ -54,7 +56,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return arrayList.size();
     }
 
-
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView songCover;
@@ -62,6 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         TextView songArtist;
         TextView songDuration;
         CardView cardView;
+        private SongGS song;
 
         public RecyclerViewHolder(final View itemView) {
             super(itemView);
@@ -75,6 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         }
 
         public void setData(SongGS song) {
+            this.song = song;
             //this.songCover.setImageBitmap(currentObj.getCoverArt(itemView.getContext()));
             this.songCover.setTag(song.getSongId());
             BitmapBuilder bitmapBuilder = new BitmapBuilder(songCover, context);
@@ -84,10 +87,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             this.songDuration.setText(song.getTime());
         }
 
-
         @Override
         public void onClick(View v) {
-            // Toast.makeText(context, "dsgedsgf", Toast.LENGTH_SHORT).show();
+            if (mListener != null) {
+                mListener.onListItemClick(song);
+            }
         }
     }
 
