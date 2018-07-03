@@ -1,0 +1,8 @@
+
+Isquid:S1068"+Remove this unused "toolbar" private field.(þ®º—8°ù¹×Å,
+Rsquid:S1068"5Remove this unused "serviceConnection" private field.(£ª©8°ù¹×Å,
+~squid:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ8°ù¹×Å,
+tsquid:S1450"VRemove the "toolbar" field and declare it as a local variable in the relevant methods.(þ®º—8°ù¹×Å,
+Hsquid:S14810"+Remove this unused "intent" local variable.(åÓ³8°ù¹×Å,
+Wsquid:S18540":Remove this useless assignment to local variable "intent".(åÓ³8°ù¹×Å,
+lsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(Å©¼ß8°ù¹×Å,

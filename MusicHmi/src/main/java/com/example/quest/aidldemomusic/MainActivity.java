@@ -1,5 +1,6 @@
 package com.example.quest.aidldemomusic;
 
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -11,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aidllibrary.IMusicService;
@@ -39,13 +41,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerListInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar_id);
+        Intent intent=new Intent(IMusicService.class.getName());
+        intent.setAction("android.intent.action.ser");
+        intent.setPackage("com.example.musicservice");
+        bindService(intent,serviceConnection, Service.BIND_AUTO_CREATE);
         setupRecyclerView();
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = new Intent();
+    protected void onStop() {
+        super.onStop();
+        unbindService(serviceConnection);
     }
 
     private void setupRecyclerView() {
@@ -62,8 +69,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerListInter
     @Override
     public void onListItemClick(SongGS songGS) {
         Toast.makeText(this, songGS.getSongTitle(), Toast.LENGTH_SHORT).show();
+        Log.i("VAL","path: "+songGS.getSongPath());
         try {
-            musicService.play(songGS);
+            if(musicService!=null) {
+                musicService.play(songGS);
+            }
+            else {
+                Toast.makeText(this, "is null", Toast.LENGTH_SHORT).show();
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
